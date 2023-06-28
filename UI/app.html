@@ -12,64 +12,86 @@
 
 <body>
     <nav class="navbar navbar-light bg-light justify-content-center">
-        <a class="navbar-brand" href="#">Sports Person Classifier</a>
+        <a class="navbar-brand" href="#">Skin Cancer Classifier</a>
     </nav>
 
     <div class="container">
         <div class="row">
-        <div class="col card-wrapper" data-player="lionel_messi">
+        <div class="col card-wrapper" data-player="AKIEC">
                 <div class="card border-0">
                     <div class="position-relative rounded-circle overflow-hidden mx-auto custom-circle-image">
-                        <img class="w-100 h-100" src="./images/messi.jpeg" alt="Card image cap">
+                        <img class="w-100 h-100" src="./images/akiec.jpg" alt="Card image cap">
                     </div>
                     <div class="card-body text-center mt-4">
-                        <h4 class="text-uppercase card-title">Lionel Messi</h4>
+                        <h4 class="text-uppercase card-title">AKIEC</h4>
                         </p>
                     </div>
                 </div>
             </div>            
-            <div class="col card-wrapper" data-player="maria_sharapova">
+            <div class="col card-wrapper" data-player="BCC">
                     <div class="card border-0">
                         <div class="position-relative rounded-circle overflow-hidden mx-auto custom-circle-image">
-                            <img class="w-100 h-100" src="./images/sharapova.jpeg" alt="Card image cap">
+                            <img class="w-100 h-100" src="./images/bcc.jpg" alt="Card image cap">
                         </div>
                         <div class="card-body text-center mt-4">
-                            <h4 class="text-uppercase card-title">Maria Sharapova</h4>
+                            <h4 class="text-uppercase card-title">BCC</h4>
                             </p>
                         </div>
                     </div>
             </div>            
-            <div class="col card-wrapper" data-player="roger_federer">
+            <div class="col card-wrapper" data-player="BKL">
                     <div class="card border-0">
                         <div class="position-relative rounded-circle overflow-hidden mx-auto custom-circle-image">
-                            <img class="w-100 h-100" src="./images/federer.jpeg" alt="Card image cap">
+                            <img class="w-100 h-100" src="./images/bkl.jpg" alt="Card image cap">
                         </div>
                         <div class="card-body text-center mt-4">
-                            <h4 class="text-uppercase card-title">Roger Federer</h4>
+                            <h4 class="text-uppercase card-title">BKL</h4>
                             </p>
                         </div>
                     </div>
             </div>          
 
-            <div class="col card-wrapper" data-player="serena_williams">
+            <div class="col card-wrapper" data-player="DF">
                 <div class="card border-0">
                     <div class="position-relative rounded-circle overflow-hidden mx-auto custom-circle-image">
-                        <img class="w-100 h-100" src="./images/serena.jpeg" alt="Card image cap">
+                        <img class="w-100 h-100" src="./images/bf.jpg" alt="Card image cap">
                     </div>
                     <div class="card-body text-center mt-4">
-                        <h4 class="text-uppercase card-title">Serena Williams</h4>
+                        <h4 class="text-uppercase card-title">DF</h4>
                         </p>
                     </div>
                 </div>
             </div>      
 
-            <div class="col card-wrapper" data-player="virat_kohli">
+            <div class="col card-wrapper" data-player="MEL">
                 <div class="card border-0">
                     <div class="position-relative rounded-circle overflow-hidden mx-auto custom-circle-image">
-                        <img class="w-100 h-100" src="./images/virat.jpeg" alt="Card image cap">
+                        <img class="w-100 h-100" src="./images/mel.jpg" alt="Card image cap">
                     </div>
                     <div class="card-body text-center mt-4">
-                        <h4 class="text-uppercase card-title">Virat Kohli</h4>
+                        <h4 class="text-uppercase card-title">MEL</h4>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col card-wrapper" data-player="VASC">
+                <div class="card border-0">
+                    <div class="position-relative rounded-circle overflow-hidden mx-auto custom-circle-image">
+                        <img class="w-100 h-100" src="./images/vasc.jpg" alt="Card image cap">
+                    </div>
+                    <div class="card-body text-center mt-4">
+                        <h4 class="text-uppercase card-title">VASC</h4>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col card-wrapper" data-player="NV">
+                <div class="card border-0">
+                    <div class="position-relative rounded-circle overflow-hidden mx-auto custom-circle-image">
+                        <img class="w-100 h-100" src="./images/nv.jpg" alt="Card image cap">
+                    </div>
+                    <div class="card-body text-center mt-4">
+                        <h4 class="text-uppercase card-title">NV</h4>
                         </p>
                     </div>
                 </div>
@@ -102,31 +124,40 @@
 
             <div class="col-sm-4" id="resultHolder">
             </div>
+            <div id="percentage"></div>
             <div class="col-sm-4" id="divClassTable">
                 <table id="classTable">
                         <tr>
-                            <th>Player</th>
+                            <th>Disease</th>
                             <th>Probability Score</th>
                         </tr>
                         <tr>
-                            <td>Leonel Messi</td>
-                            <td id="score_lionel_messi"></td>
+                            <td>AKIEC</td>
+                            <td id="score_AKIEC"></td>
                         </tr>
                         <tr>
-                            <td>Maria Sharapova</td>
-                            <td id="score_maria_sharapova"></td>
+                            <td>BCC</td>
+                            <td id="score_BCC"></td>
                         </tr>
                         <tr>
-                            <td>Rodger Federer</td>
-                            <td id="score_roger_federer"></td>
+                            <td>BKL</td>
+                            <td id="score_BKL"></td>
                         </tr>
                         <tr>
-                            <td>Serena Williams</td>
-                            <td id="score_serena_williams"></td>
+                            <td>DF</td>
+                            <td id="score_DF"></td>
                         </tr>
                         <tr>
-                            <td>Virat Kohli</td>
-                            <td id="score_virat_kohli"></td>
+                            <td>MEL</td>
+                            <td id="score_MEL"></td>
+                        </tr>
+                        <tr>
+                            <td>VASC</td>
+                            <td id="score_VASC"></td>
+                        </tr>
+                        <tr>
+                            <td>NV</td>
+                            <td id="score_NV"></td>
                         </tr>
                 </table>
             </div>

@@ -1,34 +1,61 @@
-import joblib
 import json
 import numpy as np
 import base64
 import cv2
 from wavelet import w2d
+import tensorflow as tf
+
 
 __class_name_to_number = {}
 __class_number_to_name = {}
     
 __model = None
 
-def classify_image(image_base64_data, file_path=None):
+def classify_image(file_path):
 
-    imgs = get_cropped_image_if_2_eyes(file_path, image_base64_data)
+    img = get_cv2_image_from_base64_string(file_path)
+    # targetImgC = cv2.imread(file_path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+   
+    resize = tf.image.resize(img, (64, 64))
+    final = np.expand_dims(resize/255, 0)
+    res = __model.predict(final).tolist()[0]
 
+    count = 0
+    max = 0
+    index = 0
+    for i in res:
+        count +=1
+        if i > max:
+            max = i
+            index = count
     result = []
-    for img in imgs:
-        scalled_raw_img = cv2.resize(img, (32, 32))
-        img_har = w2d(img, 'db1', 5)
-        scalled_img_har = cv2.resize(img_har, (32, 32))
-        combined_img = np.vstack((scalled_raw_img.reshape(32 * 32 * 3, 1), scalled_img_har.reshape(32 * 32, 1)))
 
-        len_image_array = 32*32*3 + 32*32
+    result.append({
+        'class': __model.predict(final).tolist()[0],
+        'class_probability': np.round(__model.predict(final) * 100, decimals = 2).tolist()[0],
+        'class_dictionary': __class_name_to_number,
+        'Maximun': max,
+        'index': index
+    })
 
-        final = combined_img.reshape(1,len_image_array).astype(float)
-        result.append({
-            'class': __model.predict(final)[0],
-            'class_probability': np.around(__model.predict_proba(final)*100,2).tolist()[0],
-            'class_dictionary': __class_name_to_number
-        })
+    # imgs = file_path
+
+    # result = []
+    # for img in imgs:
+    #     scalled_raw_img = cv2.resize(img, (64, 64))
+    #     img_har = w2d(img, 'db1', 5)
+    #     scalled_img_har = cv2.resize(img_har, (64, 64))
+    #     combined_img = np.vstack((scalled_raw_img.reshape(64 * 64 * 3, 1), scalled_img_har.reshape(64 * 64, 1)))
+
+    #     len_image_array = 64*64*3 + 64*64
+
+    #     final = combined_img.reshape(1,len_image_array).astype(float)
+    #     result.append({
+    #         'class': __model.predict(final)[0],
+    #         'class_probability': np.around(__model.predict_proba(final)*100,2).tolist()[0],
+    #         'class_dictionary': __class_name_to_number
+    #     })
 
     return result
 
@@ -40,16 +67,15 @@ def load_saved_artifacts():
     global __class_name_to_number
     global __class_number_to_name
 
-    with open("./artifacts/class_dictionary.json", "r") as f:
+    with open("C:/Users/HP/Desktop/SportyCelebrity/server/artifacts/class_dictionary.json", "r") as f:
         __class_name_to_number = json.load(f)
         __class_number_to_name = {v:k for k,v in __class_name_to_number.items()}
 
     global __model
     if __model is None:
-        with open('./artifacts/saved_model.pkl', 'rb') as f:
-            __model = joblib.load(f)
+        __model = tf.keras.models.load_model('C:/Users/HP/Desktop/SportyCelebrity/model/models.h5')
     print("loading saved artifacts...done")
-
+ 
 
 def get_cv2_image_from_base64_string(b64str):
     '''
@@ -90,13 +116,13 @@ def get_b64_test_image_for_virat():
 if __name__ == '__main__':
     load_saved_artifacts()
 
-    print(classify_image(get_b64_test_image_for_virat(), None))
+    # print(classify_image(get_b64_test_image_for_virat(), None))
 
     # print(classify_image(None, "./test_images/federer1.jpg"))
     # print(classify_image(None, "./test_images/federer2.jpg"))
     # print(classify_image(None, "./test_images/virat1.jpg"))
     # print(classify_image(None, "./test_images/virat2.jpg"))
-    # print(classify_image(None, "./test_images/virat3.jpg")) # Inconsistent result could be due to https://github.com/scikit-learn/scikit-learn/issues/13211
+    # print(classify_image(None, "./test_images/virat3.jpg")) # Inconsistent result could be due to https://github.com/scikit-learn/scikit-learn/issues/16411
     # print(classify_image(None, "./test_images/serena1.jpg"))
     # print(classify_image(None, "./test_images/serena2.jpg"))
     # print(classify_image(None, "./test_images/sharapova1.jpg"))

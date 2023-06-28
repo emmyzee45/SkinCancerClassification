@@ -17,7 +17,7 @@ function init() {
 
     dz.on("complete", function (file) {
         let imageData = file.dataURL;
-        
+       
         var url = "http://127.0.0.1:5000/classify_image";
 
         $.post(url, {
@@ -28,7 +28,6 @@ function init() {
             Most of the time if there is one person in the image you will get only one element in below array
             data = [
                 {
-                    class: "viral_kohli",
                     class_probability: [1.05, 12.67, 22.00, 4.5, 91.56],
                     class_dictionary: {
                         lionel_messi: 0,
@@ -51,37 +50,47 @@ function init() {
                 }
             ]
             */
-            console.log(data);
-            if (!data || data.length==0) {
+           console.log(data);
+           if (!data || data.length==0) {
                 $("#resultHolder").hide();
                 $("#divClassTable").hide();                
                 $("#error").show();
                 return;
             }
-            let players = ["lionel_messi", "maria_sharapova", "roger_federer", "serena_williams", "virat_kohli"];
+            let players = ['AKIEC', 'BCC', 'BKL', 'DF', 'MEL', 'NV', 'VASC'];
             
             let match = null;
             let bestScore = -1;
+            let maxScore = null;
+            let index = null
             for (let i=0;i<data.length;++i) {
                 let maxScoreForThisClass = Math.max(...data[i].class_probability);
+                
                 if(maxScoreForThisClass>bestScore) {
                     match = data[i];
                     bestScore = maxScoreForThisClass;
+                    index = match.index - 1;
+                    maxScore = match.Maximun
+                // class: "viral_kohli",
                 }
+               
             }
+            maxScore = (maxScore * 100).toFixed(2)
             if (match) {
                 $("#error").hide();
                 $("#resultHolder").show();
                 $("#divClassTable").show();
-                $("#resultHolder").html($(`[data-player="${match.class}"`).html());
+                $("#resultHolder").html($(`[data-player="${players[index]}"`).html());
+                $("#percentage").show();
+                $("#percentage").html('%' + maxScore)
                 let classDictionary = match.class_dictionary;
                 for(let personName in classDictionary) {
-                    let index = classDictionary[personName] - 1;
+                    let index = classDictionary[personName];
                     let proabilityScore = match.class_probability[index];
                     let elementName = "#score_" + personName;
                     $(elementName).html(proabilityScore);
                 }
-            }
+            } 
             // dz.removeFile(file);            
         });
     });

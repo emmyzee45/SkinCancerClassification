@@ -35,6 +35,12 @@
   text-align: center;
 }
 
+#percentage {
+  position:absolute;
+  top: 600px;
+  right: 780px;
+}
+
 #classTable {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
